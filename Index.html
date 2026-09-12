@@ -20,8 +20,22 @@
         <label>ወርሓዊ ክፍያ:</label><br>
         <input type="number" id="payment"><br><br>
 
-        <button type="button">ኣባል መዝግብ</button>
+        <<button type="button" onclick="registerMember()">ኣባል መዝግብ</button>
+        
     </form>
+<script>
+function registerMember() {
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let payment = document.getElementById("payment").value;
 
+    if (name === "" || phone === "" || payment === "") {
+        alert("ኩሎም ቦታታት ምላእ");
+        return;
+    }
+
+    alert("ኣባል " + name + " ብትኽክል ተመዝጊቡ");
+}
+</script>
 </body>
 </html>
