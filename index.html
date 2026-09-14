@@ -35,6 +35,7 @@
 <th>ስም</th>
 <th>ስልኪ</th>
 <th>ወርሓዊ ክፍያ</th>
+<th>ተግባር</th>
 </tr>
 
 <tbody id="memberList">
@@ -52,13 +53,18 @@ function displayMembers() {
 
     table.innerHTML = "";
 
-    members.forEach(function(member) {
+    members.forEach(function(member, index) {
 
         let row = table.insertRow();
 
         row.insertCell(0).textContent = member.name;
         row.insertCell(1).textContent = member.phone;
         row.insertCell(2).textContent = member.payment;
+
+        let action = row.insertCell(3);
+
+        action.innerHTML =
+            '<button onclick="deleteMember(' + index + ')">ሰርዝ</button>';
 
     });
 }
@@ -90,6 +96,18 @@ function registerMember() {
     document.getElementById("name").value = "";
     document.getElementById("phone").value = "";
     document.getElementById("payment").value = "";
+}
+
+function deleteMember(index) {
+
+    if (confirm("እዚ ኣባል ክስረዝ ትደሊ ዲኻ?")) {
+
+        members.splice(index, 1);
+
+        localStorage.setItem("members", JSON.stringify(members));
+
+        displayMembers();
+    }
 }
 
 displayMembers();
