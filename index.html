@@ -6,58 +6,84 @@
 
 <body>
 
-    <h1>ዕቁብ</h1>
+<h1>ዕቁብ</h1>
 
-    <h2>ኣባል መዝግብ</h2>
+<h2>ኣባል መዝግብ</h2>
 
-    <form>
-        <label>ስም ኣባል:</label><br>
-        <input type="text" id="name"><br><br>
+<form>
 
-        <label>ቁጽሪ ስልኪ:</label><br>
-        <input type="tel" id="phone"><br><br>
+<label>ስም ኣባል:</label><br>
+<input type="text" id="name"><br><br>
 
-        <label>ወርሓዊ ክፍያ:</label><br>
-        <input type="number" id="payment"><br><br>
+<label>ቁጽሪ ስልኪ:</label><br>
+<input type="tel" id="phone"><br><br>
 
-        <button type="button" onclick="registerMember()">
-            ኣባል መዝግብ
-        </button>
-    </form>
+<label>ወርሓዊ ክፍያ:</label><br>
+<input type="number" id="payment"><br><br>
 
-    <h2>ዝተመዝገቡ ኣባላት</h2>
+<button type="button" onclick="registerMember()">
+ኣባል መዝግብ
+</button>
 
-    <table border="1">
-        <tr>
-            <th>ስም</th>
-            <th>ስልኪ</th>
-            <th>ወርሓዊ ክፍያ</th>
-        </tr>
+</form>
 
-        <tbody id="memberList">
-        </tbody>
-    </table>
+<h2>ዝተመዝገቡ ኣባላት</h2>
+
+<table border="1">
+
+<tr>
+<th>ስም</th>
+<th>ስልኪ</th>
+<th>ወርሓዊ ክፍያ</th>
+</tr>
+
+<tbody id="memberList">
+</tbody>
+
+</table>
 
 <script>
 
+let members = JSON.parse(localStorage.getItem("members")) || [];
+
+function displayMembers() {
+
+    let table = document.getElementById("memberList");
+
+    table.innerHTML = "";
+
+    members.forEach(function(member) {
+
+        let row = table.insertRow();
+
+        row.insertCell(0).textContent = member.name;
+        row.insertCell(1).textContent = member.phone;
+        row.insertCell(2).textContent = member.payment;
+
+    });
+}
+
 function registerMember() {
 
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let payment = document.getElementById("payment").value;
+    let name = document.getElementById("name").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let payment = document.getElementById("payment").value.trim();
 
     if (name === "" || phone === "" || payment === "") {
+
         alert("ኩሎም ቦታታት ምላእ");
         return;
     }
 
-    let table = document.getElementById("memberList");
+    members.push({
+        name: name,
+        phone: phone,
+        payment: payment
+    });
 
-    let row = table.insertRow();
+    localStorage.setItem("members", JSON.stringify(members));
 
-    row.insertCell(0).innerHTML = name;
-    row.insertCell(1).innerHTML = phone;
-    row.insertCell(2).innerHTML = payment;
+    displayMembers();
 
     alert("ኣባል " + name + " ብትኽክል ተመዝጊቡ");
 
@@ -65,6 +91,8 @@ function registerMember() {
     document.getElementById("phone").value = "";
     document.getElementById("payment").value = "";
 }
+
+displayMembers();
 
 </script>
 
